@@ -4,4 +4,1145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>один месяц</title>
-<!-- content truncated for tool - will use full later -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #ECE4D2;
+    --paper-dark: #DED3B8;
+    --ink: #232019;
+    --teal: #1F4B43;
+    --teal-deep: #163530;
+    --rust: #B4482F;
+    --gold: #A8823C;
+    --sky-top: #10171C;
+  }
+  *{ box-sizing: border-box; }
+  html, body{
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Source Serif 4', serif;
+    color: var(--ink);
+    background: radial-gradient(ellipse at 50% -10%, #2c5049 0%, var(--sky-top) 55%, #0b0f12 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+  .stars{
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.5px 1.5px at 80% 15%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1px 1px at 60% 60%, rgba(255,255,255,.35), transparent),
+      radial-gradient(1px 1px at 30% 75%, rgba(255,255,255,.3), transparent),
+      radial-gradient(1.5px 1.5px at 90% 80%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1px 1px at 45% 35%, rgba(255,255,255,.3), transparent),
+      radial-gradient(1.2px 1.2px at 15% 55%, rgba(255,255,255,.25), transparent),
+      radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,.3), transparent);
+    background-repeat: no-repeat;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%, 100%{ opacity: .7; }
+    50%{ opacity: 1; }
+  }
+  .stage{
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px 16px;
+  }
+  /* ---------- GATE / LOCK SCREEN ---------- */
+  .gate{
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    color: #E7E2D3;
+  }
+  .gate .tag{
+    font-family: 'Special Elite', monospace;
+    letter-spacing: .12em;
+    font-size: 12px;
+    color: #A9C4BC;
+    margin-bottom: 10px;
+  }
+  .gate h1{
+    font-family: 'Special Elite', monospace;
+    font-size: 24px;
+    line-height: 1.35;
+    font-weight: 400;
+    margin: 0 0 28px;
+    color: #F3EFE2;
+  }
+  .gate p.sub{
+    font-size: 14.5px;
+    color: #C7CFC7;
+    margin: 0 0 28px;
+  }
+  .lock-box{
+    background: var(--paper);
+    border-radius: 8px;
+    padding: 28px 24px 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    position: relative;
+  }
+  .lock-box::before{
+    content: "";
+    position: absolute;
+    top: -1px; left: 0; right: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--teal) 0 10px, transparent 10px 20px);
+    border-radius: 8px 8px 0 0;
+  }
+  .pin-label{
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: var(--teal-deep);
+    margin-bottom: 14px;
+  }
+  .pin-dots{
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    min-height: 18px;
+  }
+  .pin-dot{
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--teal);
+    background: transparent;
+    transition: background .15s, transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .pin-dot.filled{
+    background: var(--teal);
+    transform: scale(1.1);
+    animation: dotPop .35s ease;
+  }
+  @keyframes dotPop{
+    0%{ transform: scale(0.4); }
+    60%{ transform: scale(1.35); }
+    100%{ transform: scale(1.1); }
+  }
+  .pin-dot.error{
+    border-color: var(--rust);
+    background: var(--rust);
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake{
+    0%,100%{ transform: translateX(0); }
+    25%{ transform: translateX(-6px); }
+    75%{ transform: translateX(6px); }
+  }
+  .keypad{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+  .key{
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 50%;
+    background: #F6F1E4;
+    color: var(--ink);
+    font-family: 'Special Elite', monospace;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .key:hover{
+    background: #e8e0cc;
+  }
+  .key:active{
+    transform: scale(0.92);
+    background: var(--teal);
+    color: #F3EFE2;
+  }
+  .key.zero{
+    grid-column: 2;
+  }
+  .key.del{
+    background: transparent;
+    color: var(--teal-deep);
+    font-size: 18px;
+  }
+  .key.del:hover{
+    background: rgba(31,75,67,.1);
+  }
+  .error-msg{
+    margin-top: 16px;
+    font-size: 13px;
+    color: #E2A38C;
+    min-height: 18px;
+    font-family: 'Special Elite', monospace;
+  }
+  /* ---------- BOARDING PASS ---------- */
+  .pass-wrap{
+    width: 100%;
+    max-width: 620px;
+    display: none;
+    animation: rise .7s ease forwards;
+  }
+  .pass-wrap.show{ display: block; }
+  @keyframes rise{
+    from{ opacity: 0; transform: translateY(26px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  .pass{
+    background: var(--paper);
+    border-radius: 6px;
+    box-shadow: 0 25px 60px rgba(0,0,0,.5);
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    overflow: hidden;
+    position: relative;
+    animation: breathe 5s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%, 100%{ box-shadow: 0 25px 60px rgba(0,0,0,.5); }
+    50%{ box-shadow: 0 30px 70px rgba(180,72,47,.28); }
+  }
+  @media (max-width: 560px){
+    .pass{ grid-template-columns: 1fr; }
+    .stub{ border-top: 2px dashed var(--teal); border-left: none !important; }
+    .stub::before{ display: none; }
+  }
+  .main-panel{ padding: 30px 28px 26px; position: relative; }
+  .airline-row{
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .airline{
+    font-family: 'Special Elite', monospace;
+    font-size: 15px;
+    letter-spacing: .06em;
+    color: var(--teal-deep);
+    cursor: default;
+  }
+  .airline b{ color: var(--rust); }
+  .class-tag{
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: .1em;
+    cursor: pointer;
+    transition: transform .2s, color .2s;
+    animation: shimmer 2.4s ease-in-out infinite;
+  }
+  .class-tag:hover{ transform: scale(1.05); color: var(--rust); }
+  @keyframes shimmer{
+    0%, 100%{ color: var(--gold); }
+    50%{ color: #d3b06a; }
+  }
+  .route{
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 22px;
+  }
+  .route .city{
+    font-family: 'Special Elite', monospace;
+    font-size: 22px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color .2s;
+    position: relative;
+  }
+  .route .city:hover{ color: var(--rust); }
+  .route .city span{
+    display: block;
+    font-family: 'Source Serif 4', serif;
+    font-size: 11.5px;
+    color: var(--teal-deep);
+    margin-top: 3px;
+    letter-spacing: .02em;
+  }
+  .route .plane{
+    flex: 1;
+    position: relative;
+    height: 1px;
+    background: var(--teal);
+    opacity: .55;
+    cursor: pointer;
+  }
+  .route .plane::after{
+    content: "✈";
+    position: absolute;
+    right: -2px; top: -9px;
+    color: var(--teal-deep);
+    font-size: 16px;
+    transition: transform .3s;
+    animation: planeBob 2.6s ease-in-out infinite;
+  }
+  .route .plane:hover::after{
+    transform: translateX(4px) rotate(12deg);
+  }
+  @keyframes planeBob{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-4px); }
+  }
+  .grid-fields{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 10px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(31,75,67,.25);
+  }
+  .field label{
+    display: block;
+    font-family: 'Special Elite', monospace;
+    font-size: 9.5px;
+    letter-spacing: .09em;
+    color: var(--teal-deep);
+    opacity: .8;
+    margin-bottom: 5px;
+  }
+  .field div{
+    font-family: 'Special Elite', monospace;
+    font-size: 15px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color .2s;
+  }
+  .field div:hover{ color: var(--rust); }
+  .heartbeat{ display: inline-block; animation: heartbeat 1.4s ease-in-out infinite; }
+  @keyframes heartbeat{
+    0%, 100%{ transform: scale(1); }
+    25%{ transform: scale(1.3); }
+    40%{ transform: scale(1); }
+    60%{ transform: scale(1.15); }
+  }
+  .grid-fields .field, .stub .field{
+    opacity: 0;
+    animation: fieldIn .5s ease forwards;
+  }
+  .grid-fields .field:nth-child(1){ animation-delay: .05s; }
+  .grid-fields .field:nth-child(2){ animation-delay: .12s; }
+  .grid-fields .field:nth-child(3){ animation-delay: .19s; }
+  .grid-fields .field:nth-child(4){ animation-delay: .26s; }
+  .grid-fields .field:nth-child(5){ animation-delay: .33s; }
+  .grid-fields .field:nth-child(6){ animation-delay: .40s; }
+  .stub .field:nth-child(1){ animation-delay: .45s; }
+  .stub .field:nth-child(2){ animation-delay: .52s; }
+  @keyframes fieldIn{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  .stub{
+    background: var(--paper-dark);
+    border-left: 2px dashed var(--teal);
+    padding: 26px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .stub::before, .stub::after{
+    content: "";
+    position: absolute;
+    width: 18px; height: 18px;
+    background: var(--sky-top);
+    border-radius: 50%;
+    left: -10px;
+  }
+  .stub::before{ top: -9px; }
+  .stub::after{ bottom: -9px; }
+  .stub .field{ margin-bottom: 14px; }
+  .open-letter{
+    margin-top: 12px;
+    width: 100%;
+    font-family: 'Special Elite', monospace;
+    font-size: 12.5px;
+    letter-spacing: .07em;
+    padding: 11px 10px;
+    background: var(--rust);
+    color: #F6EEE7;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: filter .2s, transform .15s;
+  }
+  .open-letter:hover{ filter: brightness(1.06); transform: translateY(-1px); }
+  .suitcase-area{
+    margin-top: 14px;
+    position: relative;
+    height: 70px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .suitcase{
+    width: 78px;
+    height: 52px;
+    background: #c4a574;
+    border: 2px solid #8b6914;
+    border-radius: 6px 6px 4px 4px;
+    position: relative;
+    cursor: pointer;
+    transition: transform .2s;
+    box-shadow: 0 4px 0 #8b6914;
+  }
+  .suitcase:hover{ transform: translateY(-2px); }
+  .suitcase::before{
+    content: "";
+    position: absolute;
+    top: -10px; left: 12px; right: 12px;
+    height: 12px;
+    background: #a67c3d;
+    border: 2px solid #8b6914;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+  }
+  .suitcase::after{
+    content: "";
+    position: absolute;
+    top: 18px; left: 50%;
+    transform: translateX(-50%);
+    width: 18px; height: 10px;
+    border: 2px solid #5c4a2a;
+    border-radius: 3px;
+    background: #d4b896;
+  }
+  .suitcase-label{
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    color: var(--teal-deep);
+    white-space: nowrap;
+    letter-spacing: .06em;
+  }
+  .falling-item{
+    position: absolute;
+    font-size: 20px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 5;
+  }
+  .falling-item.show{
+    animation: fallOut 1.1s ease-out forwards;
+  }
+  @keyframes fallOut{
+    0%{ opacity: 0; transform: translateY(0) rotate(0) scale(0.5); }
+    20%{ opacity: 1; }
+    100%{ opacity: 0; transform: translateY(70px) rotate(25deg) scale(1); }
+  }
+  .letter-wrap{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .7s ease;
+  }
+  .letter-wrap.open{ max-height: 1400px; }
+  .letter{
+    margin-top: 18px;
+    background: #F7F2E7;
+    border-radius: 6px;
+    padding: 26px 24px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: #2A241C;
+    position: relative;
+  }
+  .letter h2{
+    font-family: 'Special Elite', monospace;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--teal-deep);
+    margin: 0 0 14px;
+    letter-spacing: .04em;
+  }
+  .letter p{ margin: 0 0 14px; }
+  .letter .sign{
+    font-family: 'Special Elite', monospace;
+    font-size: 14px;
+    color: var(--rust);
+    margin-top: 6px;
+    cursor: pointer;
+  }
+  .letter .ps{
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(31,75,67,.3);
+    font-size: 14px;
+    color: #5a5048;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity .5s, max-height .5s;
+  }
+  .letter .ps.show{
+    opacity: 1;
+    max-height: 200px;
+  }
+  .typing-cursor::after{
+    content: "▋";
+    animation: blink 0.8s step-end infinite;
+    color: var(--rust);
+    margin-left: 2px;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+  .footnote{
+    text-align: center;
+    margin-top: 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    color: #7E8B84;
+    cursor: pointer;
+    transition: color .2s;
+  }
+  .footnote:hover{ color: #A9C4BC; }
+  .toast{
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Special Elite', monospace;
+    font-size: 13px;
+    letter-spacing: .04em;
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    transition: opacity .35s, transform .35s;
+    max-width: 90vw;
+    text-align: center;
+    border: 1px solid rgba(31,75,67,.25);
+  }
+  .toast.show{
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .heart-float{
+    position: fixed;
+    pointer-events: none;
+    z-index: 50;
+    font-size: 18px;
+    animation: floatUp 2.8s ease-out forwards;
+    opacity: 0.9;
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) scale(1); opacity: 0.9; }
+    100%{ transform: translateY(-120px) scale(0.4); opacity: 0; }
+  }
+  .city-tip{
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: var(--teal-deep);
+    color: #F3EFE2;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s, transform .25s;
+    z-index: 10;
+  }
+  .city:hover .city-tip{
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  .stamp{
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 54px;
+    height: 54px;
+    border: 2px solid var(--rust);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    color: var(--rust);
+    transform: rotate(12deg);
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity .2s, transform .3s;
+    user-select: none;
+    animation: stampWobble 3.5s ease-in-out infinite;
+  }
+  @keyframes stampWobble{
+    0%, 100%{ transform: rotate(12deg); }
+    50%{ transform: rotate(7deg); }
+  }
+  .stamp:hover{
+    opacity: 1;
+    transform: rotate(0deg) scale(1.08);
+  }
+  .stamp span{
+    text-align: center;
+    line-height: 1.15;
+  }
+  .secret-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(11,15,18,.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s;
+  }
+  .secret-overlay.show{
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .secret-card{
+    background: var(--paper);
+    max-width: 360px;
+    width: 90%;
+    padding: 28px 24px;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    transform: scale(0.92);
+    transition: transform .35s;
+  }
+  .secret-overlay.show .secret-card{
+    transform: scale(1);
+  }
+  .secret-card h3{
+    font-family: 'Special Elite', monospace;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--teal-deep);
+    margin: 0 0 12px;
+  }
+  .secret-card p{
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 0 0 18px;
+    color: #2A241C;
+  }
+  .secret-card button{
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: .08em;
+    padding: 10px 18px;
+    background: var(--teal);
+    color: #F3EFE2;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .plane.fly::after{
+    animation: planeFly 1.1s ease-out forwards;
+  }
+  @keyframes planeFly{
+    0%{ transform: translateX(0) rotate(0); opacity: 1; }
+    60%{ transform: translateX(40px) rotate(18deg); opacity: 1; }
+    100%{ transform: translateX(90px) rotate(25deg); opacity: 0; }
+  }
+  .spotify-link{
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 90;
+    display: none;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 16px;
+    border-radius: 30px;
+    background: var(--paper);
+    border: 1.5px solid var(--teal);
+    color: var(--teal-deep);
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: .04em;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,.45);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity .5s ease, transform .5s ease, background .2s, color .2s;
+  }
+  .spotify-link.show{ display: flex; }
+  .spotify-link.show.in{ opacity: 1; transform: translateY(0); }
+  .spotify-link:hover{ background: var(--teal); color: #F3EFE2; }
+  .spotify-link .note{ font-size: 15px; animation: heartbeat 1.8s ease-in-out infinite; }
+  @media (max-width: 560px){
+    .spotify-link{ top: 12px; right: 12px; font-size: 11px; padding: 9px 13px; }
+  }
+  .crew-msg{
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(31,75,67,.92);
+    color: #F3EFE2;
+    font-family: 'Special Elite', monospace;
+    font-size: 12.5px;
+    letter-spacing: .04em;
+    padding: 10px 18px;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 80;
+    transition: opacity .5s, transform .5s;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .crew-msg.show{
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .days-counter{
+    position: absolute;
+    bottom: 10px;
+    left: 28px;
+    font-family: 'Special Elite', monospace;
+    font-size: 10.5px;
+    color: var(--teal-deep);
+    opacity: 0.7;
+    letter-spacing: .04em;
+  }
+
+  /* Мини-самолётик и чиби */
+  .chibi-scene{
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    width: 110px;
+    height: 70px;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .mini-plane{
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-size: 22px;
+    animation: miniFly 4s ease-in-out infinite;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,.15));
+  }
+  @keyframes miniFly{
+    0%,100%{ transform: translate(0,0) rotate(-8deg); }
+    50%{ transform: translate(18px,-6px) rotate(6deg); }
+  }
+  .chibi{
+    position: absolute;
+    bottom: 0;
+    font-size: 26px;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,.12));
+  }
+  .chibi.boy{ left: 8px; animation: bob 2.2s ease-in-out infinite; }
+  .chibi.girl{ right: 4px; animation: bob 2.2s ease-in-out infinite 0.4s; }
+  @keyframes bob{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-4px); }
+  }
+  .chibi-heart{
+    position: absolute;
+    top: 8px;
+    left: 48px;
+    font-size: 12px;
+    color: var(--rust);
+    animation: heartPop 1.8s ease-in-out infinite;
+  }
+  @keyframes heartPop{
+    0%,100%{ opacity: .4; transform: scale(0.8); }
+    50%{ opacity: 1; transform: scale(1.2); }
+  }
+
+</style>
+</head>
+<body>
+<div class="stars"></div>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="./friends.mp3" type="audio/mpeg">
+</audio>
+
+<a class="spotify-link" id="spotifyLink" href="https://open.spotify.com/track/2jQiSYrwJehQAcuaaQrXnS" target="_blank" rel="noopener">
+  <span class="note">♪</span> friends, chase atlantic
+</a>
+<!-- ========== ЭКРАН БЛОКИРОВКИ ========== -->
+<div class="stage" id="gateStage">
+  <div class="gate">
+    <div class="tag">рейс sy001</div>
+    <h1>код входа</h1>
+    <div class="lock-box">
+      <div class="pin-label">день, когда всё началось</div>
+      <div class="pin-dots" id="pinDots">
+        <div class="pin-dot" data-i="0"></div>
+        <div class="pin-dot" data-i="1"></div>
+        <div class="pin-dot" data-i="2"></div>
+        <div class="pin-dot" data-i="3"></div>
+      </div>
+      <div class="keypad" id="keypad">
+        <button class="key" data-num="1">1</button>
+        <button class="key" data-num="2">2</button>
+        <button class="key" data-num="3">3</button>
+        <button class="key" data-num="4">4</button>
+        <button class="key" data-num="5">5</button>
+        <button class="key" data-num="6">6</button>
+        <button class="key" data-num="7">7</button>
+        <button class="key" data-num="8">8</button>
+        <button class="key" data-num="9">9</button>
+        <button class="key del" data-num="del">⌫</button>
+        <button class="key zero" data-num="0">0</button>
+      </div>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+  </div>
+</div>
+<!-- ========== ТАЛОН ========== -->
+<div class="stage" id="passStage" style="display:none;">
+  <div class="pass-wrap" id="passWrap">
+    <div class="pass">
+      <div class="main-panel">
+        <div class="stamp" id="stamp" title="Нажми">
+          <span>один<br>месяц</span>
+        </div>
+        <div class="airline-row">
+          <div class="airline" id="airline">sayan air</div>
+          <div class="class-tag" id="classTag">навсегда класс</div>
+        </div>
+        <div class="route">
+          <div class="city" id="cityFrom">
+            саян
+            <span>отправление</span>
+            <div class="city-tip">здесь началось</div>
+          </div>
+          <div class="plane" id="plane"></div>
+          <div class="city" id="cityTo">
+            томи
+            <span>назначение</span>
+            <div class="city-tip">сюда лечу</div>
+          </div>
+        </div>
+        <div class="grid-fields">
+          <div class="field"><label>пассажир</label><div id="passenger">томи</div></div>
+          <div class="field"><label>вылет</label><div id="dateField">05.08</div></div>
+          <div class="field"><label>месяц</label><div id="monthField">№1</div></div>
+          <div class="field"><label>встреч</label><div id="meetings">2</div></div>
+          <div class="field"><label>гейт</label><div id="gateField">сердце</div></div>
+          <div class="field"><label>статус</label><div id="status">в полёте <span class="heartbeat">♥</span></div></div>
+        </div>
+        <div class="days-counter" id="daysCounter"></div>
+        <div class="chibi-scene">
+          <div class="mini-plane">✈</div>
+          <div class="chibi-heart">♥</div>
+          <div class="chibi boy">🧑</div>
+          <div class="chibi girl">👧</div>
+        </div>
+      </div>
+      <div class="stub">
+        <div>
+          <div class="field"><label>рейс</label><div id="flight">sy001</div></div>
+          <div class="field"><label>место</label><div id="seat">рядом</div></div>
+        </div>
+        <div>
+          <button class="open-letter" id="letterBtn" onclick="toggleLetter()">✉ открыть письмо</button>
+          <div class="suitcase-area">
+            <div class="suitcase" id="suitcase" title="нажми">
+              <div class="suitcase-label">багаж</div>
+            </div>
+            <div class="falling-item" id="fall1">💌</div>
+            <div class="falling-item" id="fall2">📸</div>
+            <div class="falling-item" id="fall3">🤍</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="letter-wrap" id="letterWrap">
+      <div class="letter">
+        <h2>письмо на борту</h2>
+        <div id="letterBody"></div>
+        <p class="sign" id="sign">саян</p>
+        <div class="ps" id="ps">
+          если дочитала до конца, значит ты всё ещё со мной. это лучшее, что случилось с этим рейсом.
+        </div>
+      </div>
+    </div>
+    <div class="footnote" id="footnote">билет действует всегда</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="crew-msg" id="crewMsg"></div>
+<div class="secret-overlay" id="secretOverlay">
+  <div class="secret-card">
+    <h3 id="secretTitle">секретный багаж</h3>
+    <p id="secretText"></p>
+    <button onclick="closeSecret()">закрыть</button>
+  </div>
+</div>
+<script>
+  // Правильный код: 0508
+  const CORRECT_PIN = "0508";
+  let currentPin = "";
+  const letterParagraphs = [
+    "месяц. звучит вроде не так уж и много, но для меня это будто уже целая история, в которую я не хочу переставать верить. месяц назад все началось, и сейчас, оглядываясь назад, я понимаю что это было одно из лучших решений за последнее время, просто быть с тобой, узнавать тебя, открывать что-то новое каждый день.",
+    "за этот месяц ты успела стать чем-то намного большим чем просто человек с которым я переписываюсь или созваниваюсь. ты стала частью моего дня, моих мыслей, моего настроения. я замечаю что улыбаюсь чаще, что даже обычные дни кажутся интереснее, потому что в них есть ты.",
+    "мне нравится буквально все в тебе, как ты говоришь, как смеешься, как переживаешь по мелочам, как радуешься простым вещам. ты живая, настоящая, без масок, и именно поэтому с тобой так легко и спокойно. это редкость, встретить человека рядом с которым можно быть собой без всякого напряжения.",
+    "за этот месяц были и хорошие моменты, и не очень, недопонимания, разговоры, смех, тепло, все то что делает отношения настоящими, а не просто красивой картинкой. и знаешь, я рад что мы проходим через это вместе, что умеем разговаривать и находить общий язык, а не убегать от сложностей.",
+    "я не знаю что будет дальше, никто не знает наверняка, но одно я знаю точно, я хочу чтобы это было только начало. хочу узнавать тебя дальше, хочу проходить с тобой через хорошие и плохие дни, хочу быть тем человеком на которого ты можешь опереться, так же как ты стала опорой для меня.",
+    "спасибо тебе за этот месяц, за твою теплоту, за твое терпение, за то что ты просто есть в моей жизни. ты сделала эти дни намного ярче и лучше, и я безумно благодарен за это. люблю тебя очень сильно, моя хорошая, и жду с нетерпением всего что будет дальше, вместе с тобой."
+  ];
+  const crewMessages = [
+    "экипаж сообщает: сегодня особенно хорошая погода для полёта.",
+    "внимание пассажирам: любовь на борту разрешена без ограничений.",
+    "капитан саян желает приятного полёта.",
+    "следующая посадка, когда захочешь.",
+    "высота идеальная. сердце тоже."
+  ];
+  function showToast(msg, duration = 2600){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), duration);
+  }
+  function spawnHeart(x, y){
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = ['♥','♡','❤','❥'][Math.floor(Math.random()*4)];
+    h.style.left = (x - 10) + 'px';
+    h.style.top = (y - 10) + 'px';
+    h.style.color = ['#B4482F','#A8823C','#c45c45','#d47a6a'][Math.floor(Math.random()*4)];
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 2800);
+  }
+  function openSecret(title, text){
+    document.getElementById('secretTitle').textContent = title;
+    document.getElementById('secretText').textContent = text;
+    document.getElementById('secretOverlay').classList.add('show');
+  }
+  function closeSecret(){
+    document.getElementById('secretOverlay').classList.remove('show');
+  }
+  document.getElementById('secretOverlay').addEventListener('click', function(e){
+    if (e.target === this) closeSecret();
+  });
+  function updateDots(){
+    const dots = document.querySelectorAll('.pin-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.remove('filled', 'error');
+      if (i < currentPin.length) {
+        dot.classList.add('filled');
+      }
+    });
+  }
+  function showPinError(){
+    const dots = document.querySelectorAll('.pin-dot');
+    dots.forEach(d => d.classList.add('error'));
+    document.getElementById('errorMsg').textContent = 'неверный код';
+    setTimeout(() => {
+      currentPin = "";
+      updateDots();
+      document.getElementById('errorMsg').textContent = '';
+    }, 700);
+  }
+  function tryUnlock(){
+    if (currentPin === CORRECT_PIN) {
+      document.getElementById('gateStage').style.display = 'none';
+      document.getElementById('passStage').style.display = 'flex';
+      document.getElementById('passWrap').classList.add('show');
+      for (let i = 0; i < 14; i++) {
+        setTimeout(() => {
+          spawnHeart(
+            window.innerWidth * (0.25 + Math.random()*0.5),
+            window.innerHeight * 0.55 + Math.random()*100
+          );
+        }, i * 80);
+      }
+      showToast('добро пожаловать на борт, томи ♥', 3200);
+
+      // Автозапуск музыки
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.4;
+      music.play().catch(()=>{});
+
+      const spotifyBox = document.getElementById('spotifyLink');
+      spotifyBox.classList.add('show');
+      setTimeout(() => spotifyBox.classList.add('in'), 30);
+      updateDaysCounter();
+      setTimeout(showRandomCrewMsg, 8000);
+      setInterval(showRandomCrewMsg, 45000);
+    } else {
+      showPinError();
+    }
+  }
+  document.getElementById('keypad').addEventListener('click', (e) => {
+    const btn = e.target.closest('.key');
+    if (!btn) return;
+    const num = btn.dataset.num;
+    if (num === 'del') {
+      currentPin = currentPin.slice(0, -1);
+      updateDots();
+      return;
+    }
+    if (currentPin.length >= 4) return;
+    currentPin += num;
+    updateDots();
+    if (currentPin.length === 4) {
+      if (currentPin === CORRECT_PIN) {
+        window.open('https://open.spotify.com/track/2jQiSYrwJehQAcuaaQrXnS', '_blank');
+      }
+      setTimeout(tryUnlock, 180);
+    }
+  });
+  function updateDaysCounter(){
+    const start = new Date(2026, 7, 5);
+    const now = new Date();
+    const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+    const el = document.getElementById('daysCounter');
+    if (diff >= 0) {
+      el.textContent = `в полёте уже ${diff} ${pluralDays(diff)}`;
+    } else {
+      el.textContent = 'рейс готовится к вылету';
+    }
+  }
+  function pluralDays(n){
+    if (n % 10 === 1 && n % 100 !== 11) return 'день';
+    if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return 'дня';
+    return 'дней';
+  }
+  function showRandomCrewMsg(){
+    const msg = crewMessages[Math.floor(Math.random() * crewMessages.length)];
+    const el = document.getElementById('crewMsg');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 4500);
+  }
+  let letterOpen = false;
+  let letterClicks = 0;
+  let isTyping = false;
+  function toggleLetter(){
+    const wrap = document.getElementById('letterWrap');
+    wrap.classList.toggle('open');
+    letterOpen = wrap.classList.contains('open');
+    letterClicks++;
+    if (letterOpen) {
+      document.getElementById('letterBtn').textContent = '✉ закрыть письмо';
+      typeLetter();
+    } else {
+      document.getElementById('letterBtn').textContent = '✉ открыть письмо';
+      document.getElementById('ps').classList.remove('show');
+      document.getElementById('letterBody').innerHTML = '';
+      isTyping = false;
+    }
+    if (letterClicks === 3) {
+      setTimeout(() => showToast('читаешь уже в третий раз... мне очень приятно ♥'), 400);
+    }
+  }
+  function typeLetter(){
+    if (isTyping) return;
+    isTyping = true;
+    const body = document.getElementById('letterBody');
+    body.innerHTML = '';
+    let pIndex = 0;
+    let charIndex = 0;
+    function typeNext(){
+      if (!letterOpen) { isTyping = false; return; }
+      if (pIndex >= letterParagraphs.length) {
+        setTimeout(() => {
+          document.getElementById('ps').classList.add('show');
+        }, 400);
+        isTyping = false;
+        return;
+      }
+      let p = body.querySelector(`p[data-i="${pIndex}"]`);
+      if (!p) {
+        p = document.createElement('p');
+        p.dataset.i = pIndex;
+        p.classList.add('typing-cursor');
+        body.appendChild(p);
+      }
+      const text = letterParagraphs[pIndex];
+      if (charIndex < text.length) {
+        p.textContent = text.slice(0, charIndex + 1);
+        charIndex++;
+        setTimeout(typeNext, 28 + Math.random() * 22);
+      } else {
+        p.classList.remove('typing-cursor');
+        pIndex++;
+        charIndex = 0;
+        setTimeout(typeNext, 350);
+      }
+    }
+    typeNext();
+  }
+  let baggageClicks = 0;
+  const baggageSecrets = [
+    { title: 'багаж №1', text: 'внутри все наши разговоры до утра, скриншоты смешных сообщений и то самое чувство, когда видишь «печатает...».' },
+    { title: 'багаж №2', text: 'здесь аккуратно сложены все «скучаю» и все «скоро увидимся». они весят удивительно мало, но значат очень много.' },
+    { title: 'сверхнормативный багаж', text: 'ещё один чемодан? да. в нём место, которое я для тебя оставил. навсегда.' }
+  ];
+  document.getElementById('suitcase').addEventListener('click', () => {
+    const items = ['fall1','fall2','fall3'];
+    items.forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.classList.remove('show');
+      void el.offsetWidth;
+      setTimeout(() => el.classList.add('show'), i * 120);
+    });
+    const secret = baggageSecrets[baggageClicks % 3];
+    setTimeout(() => openSecret(secret.title, secret.text), 500);
+    baggageClicks++;
+  });
+  document.getElementById('plane').addEventListener('click', function(e){
+    this.classList.remove('fly');
+    void this.offsetWidth;
+    this.classList.add('fly');
+    showToast('самолёт уже в пути. и я тоже.');
+    spawnHeart(e.clientX, e.clientY);
+  });
+  document.getElementById('classTag').addEventListener('click', () => showToast('билет без срока действия. возврату не подлежит.'));
+  document.getElementById('passenger').addEventListener('click', () => showToast('единственный пассажир, которого я ждал.'));
+  document.getElementById('gateField').addEventListener('click', () => {
+    showToast('гейт всегда открыт для тебя.');
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => spawnHeart(window.innerWidth/2 + (Math.random()-0.5)*120, window.innerHeight/2 + (Math.random()-0.5)*60), i * 70);
+    }
+  });
+  document.getElementById('status').addEventListener('click', () => showToast('статус: всё ещё в полёте. и не собираюсь приземляться.'));
+  document.getElementById('seat').addEventListener('click', () => showToast('место рядом со мной. всегда.'));
+  document.getElementById('dateField').addEventListener('click', () => showToast('5 августа. точка отсчёта.'));
+  document.getElementById('meetings').addEventListener('click', () => showToast('две встречи. и каждая стоила всех ожиданий.'));
+  document.getElementById('monthField').addEventListener('click', () => showToast('первый месяц. а впереди ещё очень много.'));
+  document.getElementById('flight').addEventListener('click', () => showToast('sy001. самый важный рейс в расписании.'));
+  document.getElementById('sign').addEventListener('click', () => showToast('да, это правда я написал.'));
+  document.getElementById('footnote').addEventListener('click', () => showToast('пересадки действительно не нужны. мы уже на правильном маршруте.'));
+  let stampClicks = 0;
+  document.getElementById('stamp').addEventListener('click', () => {
+    stampClicks++;
+    if (stampClicks >= 5) {
+      openSecret('секретный штамп', 'ты нажала 5 раз. значит, тебе правда интересно. тогда знай: я каждый день думаю, как сделать так, чтобы следующий месяц был ещё лучше.');
+      stampClicks = 0;
+    } else {
+      openSecret('отметка о полёте', 'ровно один месяц с того дня. и каждый день этого месяца я выбирал тебя заново.');
+    }
+  });
+  document.getElementById('airline').addEventListener('click', () => showToast('sayan air. летаем только по маршруту сердце к сердцу.'));
+  document.getElementById('cityFrom').addEventListener('click', () => showToast('саян. здесь всё началось.'));
+  document.getElementById('cityTo').addEventListener('click', () => showToast('томи. сюда я лечу.'));
+  let lastHeart = 0;
+  document.getElementById('passWrap').addEventListener('mousemove', function(e){
+    const now = Date.now();
+    if (now - lastHeart > 450 && Math.random() > 0.72) {
+      lastHeart = now;
+      spawnHeart(e.clientX, e.clientY);
+    }
+  });
+</script>
+</body>
+</html>
